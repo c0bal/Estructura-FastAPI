@@ -1,0 +1,21 @@
+# Framework and ASGI server
+fastapi==0.103.1
+uvicorn[standard]==0.23.2
+
+# Environment variables
+python-dotenv==1.0.0
+
+# ORM and database
+sqlalchemy==2.0.21
+psycopg2-binary==2.9.7
+
+# Password hashing and security
+passlib==1.7.4
+bcrypt==4.0.1
+
+# Data validation
+pydantic==2.3.0
+pydantic-settings==2.0.3
+
+# JWT for authentication
+PyJWT==2.8.0

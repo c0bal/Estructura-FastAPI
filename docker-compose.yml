@@ -1,0 +1,59 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: api-server
+    depends_on:
+      - db
+    networks:
+      - app-network
+    environment:
+      ENV: ${ENV}
+
+      SERVER_HOST: ${SERVER_HOST}
+      SERVER_PORT: ${SERVER_PORT}
+
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_ALGORITHM: ${JWT_ALGORITHM}
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: ${JWT_ACCESS_TOKEN_EXPIRE_MINUTES}
+
+  db:
+    image: postgres:latest
+    container_name: db-server
+    networks:
+      - app-network
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db-volume:/var/lib/postgresql/data 
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx-server
+    ports:
+      - "80:80"
+    environment:
+      API_HOST: api
+      API_PORT: ${SERVER_PORT}
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-volume:
