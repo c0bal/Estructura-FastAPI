@@ -8,6 +8,7 @@ python-dotenv==1.0.0
 # ORM and database
 sqlalchemy==2.0.21
 psycopg2-binary==2.9.7
+alembic
 
 # Password hashing and security
 passlib==1.7.4
@@ -16,6 +17,9 @@ bcrypt==4.0.1
 # Data validation
 pydantic==2.3.0
 pydantic-settings==2.0.3
+pydantic[email]
 
 # JWT for authentication
 PyJWT==2.8.0
+
+python-multipart==0.0.20

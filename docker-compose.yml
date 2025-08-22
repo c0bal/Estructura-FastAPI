@@ -4,11 +4,15 @@ services:
       context: ./api
       dockerfile: Dockerfile
     restart: unless-stopped
-    container_name: api-server
+    container_name: api-fastapi-base
+    volumes:
+      - ./api:/api
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
     depends_on:
       - db
     networks:
-      - app-network
+      - app-network-fastapi-base
     environment:
       ENV: ${ENV}
 
@@ -25,22 +29,27 @@ services:
       JWT_ALGORITHM: ${JWT_ALGORITHM}
       JWT_ACCESS_TOKEN_EXPIRE_MINUTES: ${JWT_ACCESS_TOKEN_EXPIRE_MINUTES}
 
+      PYTHONPATH: /api
+
   db:
     image: postgres:latest
-    container_name: db-server
+    container_name: db-fastapi-base
+    restart: always
     networks:
-      - app-network
+      - app-network-fastapi-base
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5433:${DB_PORT}"
     volumes:
-      - db-volume:/var/lib/postgresql/data 
+      - db-volume:/var/lib/postgresql/data
 
   nginx:
     build:
       context: ./nginx
-    container_name: nginx-server
+    container_name: nginx-fastapi-base
     ports:
       - "80:80"
     environment:
@@ -49,10 +58,10 @@ services:
     depends_on:
       - api
     networks:
-      - app-network
+      - app-network-fastapi-base
 
 networks:
-  app-network:
+  app-network-fastapi-base:
     driver: bridge
 
 volumes:
