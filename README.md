@@ -73,7 +73,7 @@ Base robusta para aplicaciones backend modernas usando FastAPI, PostgreSQL y Ngi
 
    Recomendacion usar Ngnix
 
-   - Nginx: [http://localhost](http://localhost)
+   - Nginx: [http://localhost/docs](http://localhost/docs)
 
 ---
 

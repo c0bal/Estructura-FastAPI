@@ -1,17 +1,21 @@
-# syntax=docker/dockerfile:1.6
+# Usamos una imagen base de Python
 FROM python:3.11-slim
 
+# Establecer el directorio de trabajo
 WORKDIR /api
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    netcat-openbsd dos2unix && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y netcat-openbsd
 
+# Copiar solo los archivos necesarios para instalar las dependencias
 COPY requirements.txt .
+
+# Instalar las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copiar el resto de los archivos de la aplicación
 COPY . .
 
-RUN dos2unix /api/initializer.sh && chmod 755 /api/initializer.sh
+RUN chmod +x initializer.sh
 
-CMD ["/api/initializer.sh"]
+# Comando para iniciar con el script de inicialización
+CMD ["./initializer.sh"]

@@ -5,7 +5,7 @@ import routes
 
 log = get_logger(__name__)
 
-app = FastAPI(title="EasyCancha API", version="1.0.0")
+app = FastAPI(title="FastAPI Base", version="1.0.0")
 
 origins = ["http://localhost:5173"]
 
