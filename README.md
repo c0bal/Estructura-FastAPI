@@ -50,15 +50,23 @@ Base robusta para aplicaciones backend modernas usando FastAPI, PostgreSQL y Ngi
 ## ⚙️ Instalación y Primeros Pasos
 
 1. **Configura variables de entorno:**
-   Edita .env descrito mas abajo según tus necesidades (puertos, credenciales, JWT, etc).
+   - Edita .env descrito mas abajo según tus necesidades (puertos, credenciales, JWT, etc).
 2. **Arranca todo con Docker Compose:**
+
    ```bash
    docker compose up --build
    ```
+
    O usando Makefile:
+
    ```bash
    make all
    ```
+
+   Posibles errores:
+
+   - Permisos initializer.sh: _Otorgar permisos para correr /api/initializer.sh en caso de que no funcione build._
+
 3. **Accede a la API:**
 
    - Documentación interactiva: [http://localhost:3000/docs](http://localhost:3000/docs)
@@ -69,7 +77,7 @@ Base robusta para aplicaciones backend modernas usando FastAPI, PostgreSQL y Ngi
 
 ---
 
-## 🛠️ Comandos Útiles
+## 🛠️ Comandos Útiles (Linux)
 
 - `make startdocker` : Inicia el servicio Docker
 - `make dockerdown` : Baja todos los servicios
